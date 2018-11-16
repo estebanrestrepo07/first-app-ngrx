@@ -1,0 +1,17 @@
+<div *ngIf="items$">
+
+  <h3>Items list</h3>
+
+  <table style="width:100%">
+    <tr>
+      <th style="width:10px"></th>
+      <th style="width:auto" *ngFor="let indexCol of colLength$ | async | ngForByNumber"><button (click)="RemoveColByIndex(indexCol)">-</button></th>
+    </tr>
+    <tr *ngFor="let item of items$ | async; let indexRow = index">
+      <th style="width:10px"><button (click)=removeRowByIndex(indexRow)>X</button></th>
+      <th style="width:auto" *ngFor="let col of colLength$ | async | ngForByNumber ">{{ item.text[col] | rename }}</th>
+    </tr>
+
+  </table>
+
+</div>

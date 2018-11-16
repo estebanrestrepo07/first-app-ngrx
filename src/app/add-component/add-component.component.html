@@ -1,0 +1,7 @@
+<div class="left">
+  <form [formGroup]="form" (submit)="add()">
+    <input type="text" formControlName="input" placeholder="Item" #input>
+    <button type="submit" [disabled]="!form.valid">Add a Item</button>
+  </form>
+
+</div>
