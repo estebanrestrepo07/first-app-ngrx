@@ -1,3 +1,4 @@
+import { AppService } from './share/services/app.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -31,7 +32,7 @@ import { NgForByNumberPipe } from './share/pipes/ngForByNumber/ngForByNumber.pip
 		ReactiveFormsModule,
 		FormsModule,
 	],
-	providers: [],
+	providers: [ AppService ],
 	bootstrap: [ AppComponent ],
 })
 export class AppModule {}

@@ -1,10 +1,6 @@
-import { Observable } from 'rxjs';
-import { Item } from './../models/test.model';
-import { AppState } from './../app.state';
-import { Store } from '@ngrx/store';
-import { Component, OnInit } from '@angular/core';
-import * as ItemActions from './../state/test.actions';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Item } from './../models/test.model';
 
 @Component({
 	selector: 'app-add-component',
@@ -12,8 +8,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 	styleUrls: [ './add-component.component.scss' ],
 })
 export class AddComponent implements OnInit {
+	@Output() addItem = new EventEmitter<Item>();
 	form: FormGroup;
-	constructor(private _fb: FormBuilder, private _store: Store<AppState>) {}
+	constructor(private _fb: FormBuilder) {}
 
 	ngOnInit() {
 		this.form = this._fb.group({
@@ -21,11 +18,11 @@ export class AddComponent implements OnInit {
 		});
 	}
 
-	add() {
+	public add(): void {
 		const newItem: Item = {
 			text: this.form.get('input').value.split(','),
 		};
-		this._store.dispatch(new ItemActions.CreateItem(newItem));
+		this.addItem.emit(newItem);
 		this.form.reset();
 	}
 }

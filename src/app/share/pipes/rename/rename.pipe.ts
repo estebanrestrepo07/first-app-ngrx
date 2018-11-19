@@ -5,9 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class RenamePipe implements PipeTransform {
 	transform(value: string, args?: any): any {
-		console.log(value);
-
-		if (value !== undefined) {
+		if (value !== undefined || value) {
 			value = value.replace(/\s/g, '');
 		} else {
 			value = '-';

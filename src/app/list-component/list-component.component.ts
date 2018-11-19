@@ -1,40 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { AppService } from './../share/services/app.service';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { Item } from './../models/test.model';
-import { AppState } from './../app.state';
-import * as ItemActions from './../state/test.actions';
-import * as fromState from './../state/test.reducers';
 @Component({
 	selector: 'app-list-component',
 	templateUrl: './list-component.component.html',
 	styleUrls: [ './list-component.component.scss' ],
 })
-export class ListComponent implements OnInit {
-	items$: Observable<Item[]>;
-	colLength$: Observable<number>;
-	constructor(private _store: Store<AppState>) {}
-
-	ngOnInit() {
-		this.items$ = this._store.pipe(select(fromState.getItems));
-		this.colLength$ = this._store.pipe(select(fromState.getMaxCol));
+export class ListComponent {
+	constructor(private _appService: AppService) {}
+	colLength$ = 0;
+	items$: Item[];
+	@Output() removeRow = new EventEmitter();
+	@Output() removeCol = new EventEmitter();
+	@Input('items')
+	set items(items: Item[]) {
+		this.items$ = items;
+		this.colLength$ = this._appService.calcCols(items);
+	}
+	public removeRowByIndex(index: number): void {
+		this.removeRow.emit(index);
 	}
 
-	removeRowByIndex(index: number) {
-		this._store.dispatch(new ItemActions.RemoveRowItem(index));
-	}
-
-	RemoveColByIndex(indexC: number) {
-		let auxItems: Item[];
-		const itemsToDelete = [];
-		this.items$.subscribe((items: Item[]) => {
-			auxItems = items;
-		});
-
+	public removeColByIndex(indexC: number): void {
+		const auxItems: Item[] = this.items$;
 		auxItems.forEach((item, index, object) => {
 			item.text.splice(indexC, 1);
 			if (index === auxItems.length - 1) {
-				this._store.dispatch(new ItemActions.RemoveColItem(auxItems));
+				this.removeCol.emit(auxItems);
 			}
 		});
 	}

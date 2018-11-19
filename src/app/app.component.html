@@ -1,16 +1,21 @@
 <div>
   <div>
-    <app-add-component></app-add-component>
+    <app-add-component (addItem)="addItem($event)"></app-add-component>
   </div>
 
 </div>
-<div style="flex-direction: row; display: flex">
+<div style="flex-direction: row; display: flex" *ngIf="items$ | async as items;else default">
   <div style="width: 20%">
     <app-details-component [itemsAdded]="itemsAdded$ | async" [rowsRemoved]="rowsRemoved$ | async"
-      [colsRemoved]="colsRemoved$ | async" [rowLength]="colLength$ | async" [colLength]="rowLength$ | async "></app-details-component>
+      [colsRemoved]="colsRemoved$ | async" [rowLength]="items.length" [items]="items"></app-details-component>
   </div>
   <div style="width: 80%">
-    <app-list-component></app-list-component>
+    <app-list-component [items]="items" (removeCol)="removeCol($event)" (removeRow)="removeRow($event)"></app-list-component>
   </div>
-
 </div>
+<ng-template #default>
+  <div style="width: 20%">
+    <app-details-component [itemsAdded]="itemsAdded$ | async" [rowsRemoved]="rowsRemoved$ | async"
+      [colsRemoved]="colsRemoved$ | async" [rowLength]="0" [items]="items$ | async"></app-details-component>
+  </div>
+</ng-template>
