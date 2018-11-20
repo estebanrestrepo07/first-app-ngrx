@@ -7,12 +7,10 @@ import { Injectable } from '@angular/core';
 export class AppService {
 	constructor() {}
 	public calcCols(items: Item[]): number {
-		let auxMaxCol = 0;
-		for (const item of items) {
-			if (item.text.length > auxMaxCol) {
-				auxMaxCol = item.text.length;
-			}
-		}
-		return auxMaxCol;
+		return items.length > 0
+			? items.reduce(
+					(item, currentItem) => (item.text.length > currentItem.text.length ? item : currentItem),
+				).text.length
+			: 0;
 	}
 }
