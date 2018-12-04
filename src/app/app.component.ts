@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 	itemsAdded$: Observable<number>;
 	rowsRemoved$: Observable<number>;
 	colsRemoved$: Observable<number>;
-	colLength$: any;
+
 	constructor(private _store: Store<AppState>) {}
 
 	ngOnInit() {

@@ -11,12 +11,12 @@ import { Item } from './../models/test.model';
 export class ListComponent {
 	constructor(private _appService: AppService) {}
 	colLength$ = 0;
-	items$: Item[];
+	itemsList: Item[];
 	@Output() removeRow = new EventEmitter();
 	@Output() removeCol = new EventEmitter();
 	@Input('items')
 	set items(items: Item[]) {
-		this.items$ = items;
+		this.itemsList = items;
 		this.colLength$ = this._appService.calcCols(items);
 	}
 	public removeRowByIndex(index: number): void {
@@ -24,7 +24,7 @@ export class ListComponent {
 	}
 
 	public removeColByIndex(indexC: number): void {
-		const auxItems: Item[] = this.items$;
+		const auxItems: Item[] = this.itemsList;
 		auxItems.forEach((item, index, object) => {
 			item.text.splice(indexC, 1);
 			if (index === auxItems.length - 1) {

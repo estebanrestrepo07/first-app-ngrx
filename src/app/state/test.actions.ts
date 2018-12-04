@@ -2,16 +2,16 @@ import { Action } from '@ngrx/store';
 import { Item } from './../models/test.model';
 
 export enum TestActionTypes {
-	LOAD_ITEM = '[ITEM] load Item',
+	LOAD_ITEMS = '[ITEM] load Items',
 	CREATE_ITEM = '[ITEM] CREATE ITEM',
 	REMOVE_ROW_ITEM = '[ITEM] REMOVE ROW ITEM',
 	REMOVE_COL_ITEM = '[ITEM] REMOVE COL ITEM',
 }
 
 // LOAD
-export class LoadItem implements Action {
-	readonly type = TestActionTypes.LOAD_ITEM;
-	constructor(public payload: number) {}
+export class LoadItems implements Action {
+	readonly type = TestActionTypes.LOAD_ITEMS;
+	constructor() {}
 }
 
 // ADD
@@ -32,4 +32,4 @@ export class RemoveColItem implements Action {
 	constructor(public payload: Item[]) {}
 }
 
-export type Actions = LoadItem | CreateItem | RemoveRowItem | RemoveColItem;
+export type Actions = LoadItems | CreateItem | RemoveRowItem | RemoveColItem;

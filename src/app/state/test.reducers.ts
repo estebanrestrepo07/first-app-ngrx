@@ -3,7 +3,6 @@ import { Action } from '@ngrx/store';
 import * as TestActions from './test.actions';
 
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export interface TestState {
 	items: Item[];
@@ -12,7 +11,7 @@ export interface TestState {
 	itemsAdded: number;
 }
 
-const defaultState: TestState = {
+export const defaultState: TestState = {
 	items: [],
 	colsRemoved: 0,
 	rowsRemoved: 0,
@@ -28,7 +27,7 @@ export function testReducer(state: TestState = defaultState, action: TestActions
 	};
 	switch (action.type) {
 		case TestActions.TestActionTypes.CREATE_ITEM:
-			newState.items.push(action.payload);
+			newState.items = [ ...newState.items, action.payload ];
 			++newState.itemsAdded;
 			break;
 
@@ -41,7 +40,7 @@ export function testReducer(state: TestState = defaultState, action: TestActions
 			++newState.colsRemoved;
 			break;
 		default:
-			return state;
+			return newState;
 	}
 
 	return newState;

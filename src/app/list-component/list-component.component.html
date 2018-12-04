@@ -1,4 +1,4 @@
-<div *ngIf="items$">
+<div *ngIf="itemsList">
 
   <h3>Items list</h3>
 
@@ -7,7 +7,7 @@
       <th style="width:10px"></th>
       <th style="width:auto" *ngFor="let indexCol of colLength$ | ngForByNumber"><button (click)="removeColByIndex(indexCol)">-</button></th>
     </tr>
-    <tr *ngFor="let item of items$; let indexRow = index">
+    <tr *ngFor="let item of itemsList; let indexRow = index">
       <th style="width:10px"><button (click)=removeRowByIndex(indexRow)>X</button></th>
       <th style="width:auto" *ngFor="let col of colLength$ | ngForByNumber ">{{ item.text[col] | rename }}</th>
     </tr>
